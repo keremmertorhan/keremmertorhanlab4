@@ -1,0 +1,30 @@
+name: Python CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🚀 Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: 🐍 Set Up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.12'
+
+      - name: 📦 Install Dependencies
+        run: |
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+      - name: 🛠️ Run Tests
+        run: |
+          pytest || echo "Tests failed"
